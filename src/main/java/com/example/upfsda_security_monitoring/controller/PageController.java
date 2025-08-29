@@ -1,11 +1,21 @@
 package com.example.upfsda_security_monitoring.controller;
 
+import com.example.upfsda_security_monitoring.entity.AllLabRtspUrl;
+import com.example.upfsda_security_monitoring.service.AllAlertNotificationService;
+import com.example.upfsda_security_monitoring.service.AllLabRtspUrlService;
+import com.example.upfsda_security_monitoring.service.LabDetectionService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import java.util.List;
+import java.util.Optional;
 
+
+@Slf4j
 @Controller
 @RequestMapping("/upfsdaMonitoring")
 public class PageController {
@@ -13,6 +23,22 @@ public class PageController {
     // This class will handle page navigation and rendering
     // You can add methods to return views or redirect to other pages
     // For example, you might have a method like this:
+
+    private final AllAlertNotificationService allAlertNotificationService;
+    private final AllLabRtspUrlService allLabRtspUrlService;
+    private final LabDetectionService labDetectionService;
+
+
+    public PageController(
+            AllAlertNotificationService allAlertNotificationService,
+            AllLabRtspUrlService allLabRtspUrlService,
+            LabDetectionService labDetectionService
+    ) {
+        this.allAlertNotificationService = allAlertNotificationService;
+        this.allLabRtspUrlService = allLabRtspUrlService;
+        this.labDetectionService = labDetectionService;
+
+    }
 
     @GetMapping("/login")
     public String homePage() {
@@ -25,8 +51,12 @@ public class PageController {
     }
 
     @GetMapping("/labProfilePage")
-    public String labProfilePage(@RequestParam(name = "labName", required = false) String labName) {
+    public String labProfilePage(@RequestParam(name = "labName", required = false) String labName,
+                                 @RequestParam(name = "id", required = false) Long id,Model model) {
 
+
+        labDetectionService.findAll();
+        model.addAttribute("allLabDetectionData", labDetectionService.findAll());
         return "Home/LabProfilePage"; // This would return the lab profile view
     }
 
@@ -36,7 +66,8 @@ public class PageController {
     }
 
     @GetMapping("/timeLineNavigation")
-    public String timeLineNavigation() {
+    public String timeLineNavigation(@RequestParam(name = "id") Optional<Long> id) {
+
         return "Home/DetectionTimelinepage"; // This would return the timeline navigation view
     }
 
@@ -47,7 +78,11 @@ public class PageController {
     }
 
     @GetMapping("/labDashboard")
-    public String labDashboard() {
+    public String labDashboard(Model model) {
+
+
+        allLabRtspUrlService.findAll();
+        model.addAttribute("allLabRtspUrlData",  allLabRtspUrlService.findAll());
         return "Home/LabDashboard"; // This would return the lab dashboard view
     }
 
@@ -57,5 +92,4 @@ public class PageController {
     }
 
 
-    // Add more methods as needed for your application
 }

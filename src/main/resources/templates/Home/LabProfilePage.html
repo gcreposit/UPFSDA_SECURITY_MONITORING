@@ -1,12 +1,92 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head th:replace="~{fragment/fragment::head}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css" rel="stylesheet">
+    <style>
+        .person-img {
+            width: 56px;
+            height: 56px;
+            border-radius: 8px;
+            object-fit: cover;
+            cursor: pointer;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
 
+        .person-img:hover {
+            transform: scale(1.05);
+            border-color: #2176ff;
+        }
+
+        .person-img.unauth {
+            border-color: #dc3545;
+        }
+
+        .person-img.auth {
+            border-color: #28a745;
+        }
+
+        .detected-badge {
+            background: #e8f5e8;
+            color: #28a745;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .alert-badge {
+            background: #ffe6e6;
+            color: #dc3545;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 500;
+        }
+
+        .card {
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .loading-placeholder {
+            width: 56px;
+            height: 56px;
+            background: #f8f9fa;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 2px dashed #dee2e6;
+        }
+
+        .spinner-border-sm {
+            width: 1rem;
+            height: 1rem;
+        }
+
+        .modal-body img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .error-img {
+            background: #f8d7da;
+            color: #721c24;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+        }
+
+    </style>
 </head>
 <body>
 
 <th:block th:replace="~{fragment/fragment :: header}"></th:block>
-
 
 
 <!-- Breadcrumb -->
@@ -15,95 +95,126 @@
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="#">Back to Dashboard</a></li>
             <li class="breadcrumb-item" id="breadheading"><a href="#">Agra District</a></li>
-            <li class="breadcrumb-item active" aria-current="page"><b id="labNameDisplay">Lab Name - Agra Monitoring</b></li>
+            <li class="breadcrumb-item active" aria-current="page"><b id="labNameDisplay">Lab Name - Agra Monitoring</b>
+            </li>
         </ol>
     </nav>
 </div>
 
-<!-- Notification -->
-<div class="notif-success d-flex align-items-center">
-    <i class="bi bi-check-circle-fill"></i>
-    <div>
-        <div class="fw-semibold">Authorized person detected</div>
-        <div class="text-muted" style="font-size:0.95rem;">at 14:32</div>
-    </div>
-</div>
+
+<!--<div class="notif-success d-flex align-items-center">-->
+<!--    <i class="bi bi-check-circle-fill"></i>-->
+<!--    <div>-->
+<!--        <div class="fw-semibold">Authorized person detected</div>-->
+<!--        <div class="text-muted" style="font-size:0.95rem;">at 14:32</div>-->
+<!--    </div>-->
+<!--</div>-->
+
 
 <!-- Main Content -->
 <div class="container mt-2">
     <h3 class="fw-bold" id="labNameHeader">Lab Name - Agra Monitoring</h3>
+
+    <!-- Summary Cards -->
+    <div class="row g-3">
+        <!--        <div class="col-lg-3">-->
+        <!--            <a href="/upfsdaMonitoring/labDetectionSummary" class="text-decoration-none">-->
+
+        <!--                <div class="summary-card">-->
+        <!--                    <span class="icon icon-blue"><i class="bi bi-journal-text"></i></span>-->
+        <!--                    <div>-->
+        <!--                        <div class="summary-title">Detection Summary</div>-->
+        <!--                        <div class="summary-desc">View detailed analytics</div>-->
+        <!--                    </div>-->
+        <!--                </div>-->
+        <!--            </a>-->
+        <!--        </div>-->
+
+        <div class="col-lg-4">
+            <a id="timeline-link" class="text-decoration-none">
+
+                <div class="summary-card">
+                    <span class="icon icon-green"><i class="bi bi-clock-history"></i></span>
+                    <div>
+                        <div class="summary-title">Detection Timeline</div>
+                        <div class="summary-desc">View chronological events</div>
+                    </div>
+                </div>
+            </a>
+        </div>
+<!--        <div class="col-lg-4">-->
+<!--            <a href="/upfsdaMonitoring/crowdDetedtion" class="text-decoration-none">-->
+
+<!--                <div class="summary-card">-->
+<!--                    <span class="icon icon-red"><i class="bi bi-fire"></i></span>-->
+<!--                    <div>-->
+<!--                        <div class="summary-title">Fire & Crowd Detection</div>-->
+<!--                        <div class="summary-desc">Safety monitoring summary</div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--        </div>-->
+<!--        <div class="col-lg-4">-->
+<!--            <a href="/upfsdaMonitoring/allAlertDashboard" class="text-decoration-none">-->
+
+<!--                <div class="summary-card">-->
+<!--                    <span class="icon icon-blue"><i class="bi bi-bell-fill"></i></span>-->
+<!--                    <div>-->
+<!--                        <div class="summary-title">All Alert Analysis</div>-->
+<!--                        <div class="summary-desc">Alerts summary</div>-->
+<!--                    </div>-->
+<!--                </div>-->
+<!--            </a>-->
+<!--        </div>-->
+    </div>
+
     <div class="mb-2 text-muted" style="font-size:1.15rem;">Real-time security monitoring and person detection</div>
     <div class="row g-3 mb-3">
-        <!-- Authorized Persons -->
+        <!----------------------------Authorized Persons-------------------------->
         <div class="col-lg-3">
-            <div class="card p-3 h-100">
+            <div class="card p-3 h-100" style="max-height: 400px; overflow-y: auto;">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <span class="fw-semibold">Authorized Persons</span>
-                    <span class="detected-badge">6 Detected</span>
+                    <span class="detected-badge" id="authorizedCount">0 Detected</span>
                 </div>
-                <div class="d-flex flex-wrap mb-2">
-                    <img src="/assets/PersonImg/nadeem.jpg" class="person-img me-2 mb-2" alt="">
-                    <img src="/assets/PersonImg/samarth.jpg" class="person-img me-2 mb-2" alt="">
-                    <img src="/assets/PersonImg/sameer.jpg" class="person-img me-2 mb-2" alt="">
-                    <img src="/assets/PersonImg/avi2.jpg" class="person-img me-2 mb-2" alt="">
-                    <img src="/assets/PersonImg/aviraaj.jpg" class="person-img me-2 mb-2" alt="">
-                    <img src="/assets/PersonImg/sameer2.jpg" class="person-img me-2 mb-2" alt="">
+                <div class="d-flex flex-wrap mb-2" id="authorizedPersons">
+                    <!-- Authorized person images will be loaded here -->
                 </div>
-                <div class="text-success mt-1"><i class="bi bi-check-circle"></i> All authorized personnel detected
+                <div class="text-success mt-1" id="authorizedStatus">
+                    <i class="bi bi-check-circle"></i> All authorized personnel detected
                 </div>
             </div>
         </div>
-        <!-- Unauthorized Persons -->
+        <!----------------------------Unauthorized Persons------------------------>
         <div class="col-lg-3">
-            <div class="card p-3 h-100">
+            <div class="card p-3 h-100" style="max-height: 400px; overflow-y: auto;">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <span class="fw-semibold">Unauthorized Persons</span>
-                    <span class="alert-badge">2 Detected <span class="ms-1">Alert</span></span>
+                    <span class="alert-badge" id="unauthorizedCount">0 Detected</span>
                 </div>
-                <div class="d-flex flex-wrap mb-2">
-                    <img src="https://randomuser.me/api/portraits/men/21.jpg" class="person-img unauth me-2 mb-2"
-                         alt="">
-                    <img src="https://randomuser.me/api/portraits/men/22.jpg" class="person-img unauth me-2 mb-2"
-                         alt="">
-                    <div class="person-img add me-2 mb-2" style="width:56px;height:56px;">+</div>
+                <div class="d-flex flex-wrap mb-2" id="unauthorizedPersons">
+                    <!-- Unauthorized person images will be loaded here -->
                 </div>
-                <div class="text-danger mt-1"><i class="bi bi-exclamation-triangle"></i> Unauthorized access detected
+                <div class="text-danger mt-1" id="unauthorizedStatus">
+                    <i class="bi bi-exclamation-triangle"></i> No unauthorized access detected
                 </div>
             </div>
         </div>
-        <!-- Identified Objects -->
+
+        <!----------------------------Identified Objects-------------------------->
         <div class="col-lg-3">
-            <div class="card p-3 h-100">
+            <div class="card p-3 h-100" style="max-height: 400px; overflow-y: auto;">
                 <div class="d-flex justify-content-between align-items-center mb-2">
                     <span class="fw-semibold">Identified Objects</span>
-                    <span class="objects-badge">12 Objects</span>
+                    <span class="detected-badge" id="objectCount">0 Objects</span>
                 </div>
-                <div class="d-flex flex-wrap mb-2">
-                    <div class="object-box me-2 mb-2">
-                        <div class="object-icon"><i class="bi bi-pen"></i></div>
-                        <div class="object-label">Sample</div>
-                    </div>
-                    <div class="object-box me-2 mb-2">
-                        <div class="object-icon"><i class="bi bi-box"></i></div>
-                        <div class="object-label">Package</div>
-                    </div>
-                    <div class="object-box me-2 mb-2">
-                        <div class="object-icon"><i class="bi bi-cpu"></i></div>
-                        <div class="object-label">Equipment</div>
-                    </div>
-                    <div class="object-box me-2 mb-2">
-                        <div class="object-icon"><i class="bi bi-beaker"></i></div>
-                        <div class="object-label">Lab</div>
-                    </div>
-                    <div class="object-box me-2 mb-2">
-                        <div class="object-icon"><i class="bi bi-archive"></i></div>
-                        <div class="object-label">Box</div>
-                    </div>
-                    <div class="object-box me-2 mb-2" style="background:#f3f4f8;border:2px dashed #2176ff;">
-                        <div class="object-label">+7 more</div>
-                    </div>
+                <div class="d-flex flex-wrap mb-2" id="identifiedObjects">                    <!-- Object images will be populated here -->
                 </div>
-                <div class="text-primary mt-1"><i class="bi bi-search"></i> Objects successfully identified</div>
+
+                <div class="text-info mt-1" id="objectStatus">
+                    <i class="bi bi-box"></i> No objects detected
+                </div>
+
             </div>
         </div>
         <!-- Person Total Count -->
@@ -118,75 +229,54 @@
                 <div class="text-warning"><i class="bi bi-people"></i> 2 personnel missing</div>
             </div>
         </div>
+
+
+
     </div>
-    <!-- Summary Cards -->
-    <div class="row g-3">
-        <div class="col-lg-3">
-            <a href="/upfsdaMonitoring/labDetectionSummary" class="text-decoration-none">
 
-            <div class="summary-card">
-                <span class="icon icon-blue"><i class="bi bi-journal-text"></i></span>
-                <div>
-                    <div class="summary-title">Detection Summary</div>
-                    <div class="summary-desc">View detailed analytics</div>
-                </div>
+</div>
+<!-- Image Modal -->
+<div class="modal fade" id="imageModal" tabindex="-1" aria-labelledby="imageModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="imageModalLabel">Person Image</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
-            </a>
-        </div>
-
-        <div class="col-lg-3">
-            <a href="/upfsdaMonitoring/timeLineNavigation" class="text-decoration-none">
-
-            <div class="summary-card">
-                <span class="icon icon-green"><i class="bi bi-clock-history"></i></span>
-                <div>
-                    <div class="summary-title">Detection Timeline</div>
-                    <div class="summary-desc">View chronological events</div>
-                </div>
+            <div class="modal-body text-center">
+                <img id="modalImage" src="" alt="Person Image" class="img-fluid">
             </div>
-            </a>
-        </div>
-        <div class="col-lg-3">
-            <a href="/upfsdaMonitoring/crowdDetedtion" class="text-decoration-none">
-
-            <div class="summary-card">
-                <span class="icon icon-red"><i class="bi bi-fire"></i></span>
-                <div>
-                    <div class="summary-title">Fire & Crowd Detection</div>
-                    <div class="summary-desc">Safety monitoring summary</div>
-                </div>
-            </div>
-            </a>
-        </div>
-        <div class="col-lg-3">
-            <a href="/upfsdaMonitoring/allAlertDashboard" class="text-decoration-none">
-
-                <div class="summary-card">
-                    <span class="icon icon-blue"><i class="bi bi-bell-fill"></i></span>
-                    <div>
-                        <div class="summary-title">All Alert Analysis</div>
-                        <div class="summary-desc">Alerts summary</div>
-                    </div>
-                </div>
-            </a>
         </div>
     </div>
 </div>
 
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
 <!-- Bootstrap JS and Bootstrap Icons CDN -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <th:block th:replace="~{fragment/fragment :: scripts}"></th:block>
+<script src="/js/labProfilePage.js"></script>
+
 <script>
-    window.onload = function() {
+    window.onload = async function () {
         const urlParams = new URLSearchParams(window.location.search);
+        console.log("URL Parameters:", urlParams.toString());
         const labName = urlParams.get('labName');
+        const labId = urlParams.get('id');  // Extract 'id' parameter
         if (labName) {
             // Dynamically updating the content of both elements
             document.getElementById('labNameDisplay').textContent = `Lab Name - ${labName} Monitoring`;
             document.getElementById('labNameHeader').textContent = `Lab Name - ${labName} `;
             document.getElementById('breadheading').textContent = `${labName} District`;
         }
+
+
     };
 </script>
 </body>
 </html>
+
+
+
+
+

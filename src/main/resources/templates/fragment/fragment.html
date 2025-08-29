@@ -457,11 +457,330 @@
         .status-alert {
             background: #e74c3c;
         }
+        .summary-card .summary-title {
+            font-weight: 600;
+        }
+        .summary-card .summary-desc {
+            color: #888;
+            font-size: 0.98rem;
+        }
+        .summary-card .icon-green {
+            color: #27c46b;
+            font-size: 2rem;
+            margin-right: 16px;
+        }
+        .container {
+            margin-top: 20px;
+        }
+        .lab-status-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+            margin-right: 6px;
+            background: #27c46b;
+        }
+        /* Timeline Detection System Styles */
+
+        .timeline-box {
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background: #fff;
+        }
+
+        .timeline-row {
+            padding: 8px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .timeline-row:hover {
+            background-color: #e3f2fd !important;
+            transform: translateX(2px);
+        }
+
+        .timeline-selected {
+            background-color: #e8f5e8 !important;
+            border-left: 4px solid #28a745;
+            font-weight: bold;
+        }
+
+        .timeline-row span:first-child {
+            min-width: 30px;
+            font-family: 'Courier New', monospace;
+        }
+
+        /* Frame Cards */
+        .frame-card {
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
+            cursor: pointer;
+        }
+
+        .frame-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .frame-card img {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .badge-time {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            font-size: 0.75rem;
+            z-index: 2;
+        }
+
+        .badge-status {
+            position: absolute;
+            bottom: 8px;
+            left: 8px;
+            font-size: 0.7rem;
+            z-index: 2;
+            max-width: calc(100% - 16px);
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        /* Loading States */
+        .person-img {
+            width: 50px;
+            height: 50px;
+            border-radius: 4px;
+            object-fit: cover;
+            cursor: pointer;
+            transition: transform 0.2s ease;
+        }
+
+        .person-img:hover {
+            transform: scale(1.05);
+        }
+
+        /* Detected Frames Badge */
+        .detected-badge {
+            background-color: #28a745;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: 500;
+        }
+
+        /* Play Controls */
+        .btn-success {
+            min-width: 100px;
+        }
+
+        .form-range {
+            accent-color: #28a745;
+        }
+
+        /* Timeline Container */
+        .timeline-box [style*="background:#f8f9fa"] {
+            max-height: 300px;
+            overflow-y: auto;
+        }
+
+        .timeline-box [style*="background:#f8f9fa"]::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .timeline-box [style*="background:#f8f9fa"]::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .timeline-box [style*="background:#f8f9fa"]::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+        }
+
+        .timeline-box [style*="background:#f8f9fa"]::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        /* Empty States */
+        .text-center i.fs-1 {
+            opacity: 0.3;
+            margin-bottom: 1rem;
+        }
+
+        /* Animation for timeline updates */
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .timeline-row {
+            animation: slideIn 0.3s ease;
+        }
+
+        /* Frame loading animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
+        .frame-card {
+            animation: fadeIn 0.4s ease;
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+            .timeline-row {
+                padding: 6px 8px;
+                font-size: 0.9rem;
+            }
+
+            .frame-card img {
+                height: 150px;
+            }
+
+            .badge-time, .badge-status {
+                font-size: 0.65rem;
+            }
+
+            .person-img {
+                width: 40px;
+                height: 40px;
+            }
+        }
+
+        /* Status-specific colors */
+        .timeline-row .text-success {
+            color: #28a745 !important;
+        }
+
+        .timeline-row .text-warning {
+            color: #ffc107 !important;
+        }
+
+        .timeline-row .text-danger {
+            color: #dc3545 !important;
+        }
+
+        /* Cursor utilities */
+        .cursor-pointer {
+            cursor: pointer;
+        }
+
+        /* Enhanced modal styles */
+        #imageModal .modal-dialog {
+            max-width: 800px;
+        }
+
+        #imageModal .modal-body img {
+            max-height: 70vh;
+            width: auto;
+            height: auto;
+        }
+        .alertSummary-card {
+            background: #f8f9fa;
+            padding: 16px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+        /* Scrollable Alert Container - Parent wrapper */
+        .alerts-wrapper {
+            max-height: 500px; /* Adjust based on your needs */
+            overflow-y: auto;
+            overflow-x: hidden;
+            padding: 10px;
+            border: 1px solid #e0e0e0;
+            border-radius: 8px;
+            background-color: #fafafa;
+        }
+
+        #alert-container {
+            /* Remove previous height constraints */
+            height: auto;
+        }
+
+        /* Custom scrollbar styling for alerts wrapper */
+        .alerts-wrapper::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        .alerts-wrapper::-webkit-scrollbar-track {
+            background: #f1f1f1;
+            border-radius: 3px;
+        }
+
+        .alerts-wrapper::-webkit-scrollbar-thumb {
+            background: #c1c1c1;
+            border-radius: 3px;
+        }
+
+        .alerts-wrapper::-webkit-scrollbar-thumb:hover {
+            background: #a8a8a8;
+        }
+
+        /* Alert card layout improvements */
+        .alert-card {
+            transition: all 0.3s ease;
+            border: 1px solid rgba(0,0,0,0.1);
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .alert-card:hover {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        .time-badge {
+            font-family: 'Courier New', monospace;
+            border-radius: 4px !important;
+            white-space: nowrap;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .time-badge {
+                min-width: 70px;
+                font-size: 11px;
+            }
+
+            .alert-card {
+                padding: 0.75rem !important;
+            }
+
+            .alert-card .fs-5 {
+                font-size: 1rem !important;
+            }
+        }
+
+
     </style>
     <!-- Bootstrap Icons for bell -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Chart.js -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/commonJs.js"></script>
 
 
 </th:block>
@@ -504,10 +823,7 @@
                 </button>
 
                 <!-- "All Alerts" Button -->
-                <a  href="/upfsdaMonitoring/allAlertDashboard" class="btn btn-link me-4 text-decoration-none" id="allAlertsBtn" title="All Alerts">
-                    <i class="bi bi-exclamation-circle" style="font-size: 24px;"></i>
-                    <span class="text-muted">All Alerts</span>
-                </a>
+<!--           t-->
                 <span class="me-4 text-muted"><i class="bi bi-clock"></i> 06:00 PM</span>
                 <div class="dropdown me-3">
                     <button class="btn btn-light dropdown-toggle" type="button" data-bs-toggle="dropdown"
@@ -542,6 +858,45 @@
             window.location.href = "/upfsdaMonitoring/login";
 
         });
+
+
+         //     COMMON FETCH FUNCTION
+        //  Pass the EndPoint and formData
+        async function fetchData(endpoint, inputData = null) {
+
+            try {
+                // Determine request method and body
+                const options = inputData
+                    ? {method: 'POST', body: inputData}
+                    : {method: 'GET'};
+
+                const response = await fetch(endpoint, options);
+
+                // Check for successful response
+                if (!response.ok) {
+                    throw new Error(`Error: ${response.status} - ${response.statusText}`);
+                }
+
+                // Handle JSON or text response
+                const contentType = response.headers.get('content-type');
+                if (contentType && contentType.includes('application/json')) {
+
+                    return await response.json();
+
+
+                } else {
+                    return await response.text();
+
+
+                }
+
+            } catch (error) {
+                console.error('Error fetching data:', error);
+                return null; // Return null on failure
+            }
+        }
+
+
     </script>
 
 
@@ -678,7 +1033,9 @@
             const alertSider = document.getElementById('alertSider');
             alertSider.classList.toggle('active');
             if (alertSider.classList.contains('active')) {
+                window.location.href="/upfsdaMonitoring/labDashboard";
                 renderAlertSider();
+
             }
         });
         // Close button
@@ -689,6 +1046,17 @@
             renderAlertSider();
         });
 
+
+    </script>
+
+<!----------------------------This is the Inline Js for Populating on the Page-->
+    <script th:inline="javascript">
+
+
+
+   let allRtspUrlData,allLabDetectionData;
+   allRtspUrlData=[[${allLabRtspUrlData}]]
+   allLabDetectionData=[[${allLabDetectionData}]]
 
     </script>
 </th:block>
